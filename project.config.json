@@ -1,0 +1,16 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx1b54c75a7e0902ce",
+	"projectname": "tourmanager2",
+	"miniprogramRoot": "dist/",
+	"libVersion": "2.3.2",
+	"condition": {}
+}

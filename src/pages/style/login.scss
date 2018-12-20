@@ -1,0 +1,36 @@
+@import "../../assets/style/theme";
+
+.container{
+  height: 100vh;
+  background: $bodyBackgroundColor;
+}
+
+.title{
+  height: 40vh;
+  font-size: 60rpx;
+  color: $fontColor;
+}
+
+input{
+  width: 70vw;
+  height: 120rpx;
+  padding-bottom: 30rpx;
+  display: block;
+  margin: 0 auto 90rpx;
+  text-align: center;
+  border-bottom: 1rpx solid $lineColor;
+}
+
+.submit{
+  width: 30.99vw;
+  height: 90rpx;
+  background: -webkit-linear-gradient(left, #ff9f2b 0%,#ff4c5b 100%);
+  background: linear-gradient(to right, #ff9f2b 0%,#ff4c5b 100%);
+  position: fixed;
+  left: 50%;
+  bottom: 93rpx;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  color: white;
+  border-radius: 90rpx;
+}

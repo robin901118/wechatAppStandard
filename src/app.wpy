@@ -1,0 +1,47 @@
+<style lang="scss" src="./assets/style/base.scss"></style>
+<style lang="scss" src="./assets/style/flex.scss"></style>
+
+<script>
+import wepy from 'wepy';
+import 'wepy-async-function';
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/login',
+    ],
+    window: {
+      backgroundTextStyle: 'dark',
+      navigationBarBackgroundColor: '#94d2ff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black',
+      backgroundColor:'#1989fa'
+    }
+  };
+
+  globalData = {
+    userInfo: null
+  };
+
+  constructor () {
+    super();
+    this.use('requestfix');
+    this.use('promisify');//开启promise
+  }
+
+  onLaunch() {}
+
+  getUserInfo(cb) {
+    const that = this;
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo;
+        cb && cb(res.userInfo)
+      }
+    });
+  }
+}
+</script>

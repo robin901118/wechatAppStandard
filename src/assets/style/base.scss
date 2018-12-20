@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+button{
+  &::before{display: none;}
+}
+
+view,input,text,scroll-view{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}

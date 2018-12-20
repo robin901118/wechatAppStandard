@@ -1,0 +1,75 @@
+<style lang="scss" src="./style/login.scss"></style>
+
+<template>
+  <view class="container">
+    <!--标题头部 开始-->
+    <view class="flex crossCenter mainCenter title">
+      带队管理助手
+    </view>
+    <!--标题头部 结束-->
+    <form @submit="formSubmit">
+      <input placeholder="请输入账号"
+             name="account"
+             placeholder-style="color:#424679"
+             auto-focus/>
+      <input placeholder="请输入密码"
+             type="password"
+             name="password"
+             placeholder-style="color:#424679"/>
+
+      <button form-type="submit"
+              class="submit">登录
+      </button>
+    </form>
+
+
+    <!--提示插件-->
+    <van-toast id="van-toast"/>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Toast from '../components/vant/toast/toast';
+  import {isLogin} from '../assets/js/wxRequest';
+
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '登录',
+      disableScroll: true
+    };
+
+    methods = {
+      /*提交*/
+      formSubmit(e) {
+        if (!e.detail.value.account) {
+          Toast.fail('请填写账号');
+          return false;
+        } else if (!e.detail.value.password) {
+          Toast.fail('请填写密码');
+          return false;
+        } else {
+          Toast.loading({
+            mask: true,
+            message: '登录中...'
+          });
+
+          /*跳转页面*/
+          setTimeout(()=>{
+            wx.setStorage({
+              key: 'isLogin',
+              data: 1
+            });
+            wx.redirectTo({
+              url: 'index'
+            });
+          },3000);
+        }
+      }
+    };
+
+    async onLoad() {
+      let loginState = await isLogin();
+    };
+  }
+</script>
