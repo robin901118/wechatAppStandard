@@ -1,7 +1,7 @@
 /**
  * 腾讯地图坐标转换百度地图坐标
- * @param lng 纬度
- * @param lat 经度
+ * @param lng 经度
+ * @param lat 纬度
  * */
 const toBMapLocation = (lng, lat) => {
   let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
@@ -12,15 +12,15 @@ const toBMapLocation = (lng, lat) => {
   let lngs = z * Math.cos(theta) + 0.0065;
   let lats = z * Math.sin(theta) + 0.006;
   return {
-    lng: lngs,
-    lat: lats
+    lng: lngs.toFixed(6),//后台控制为小数点后6位
+    lat: lats.toFixed(6)//后台控制为小数点后6位
   }
 };
 
 /**
  * 百度地图坐标转腾讯地图坐标
- * @param lng 纬度
- * @param lat 经度
+ * @param lng 经度
+ * @param lat 纬度
  * */
 const toQQMapLocation = (lng, lat) => {
   let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
@@ -31,8 +31,8 @@ const toQQMapLocation = (lng, lat) => {
   let lngs = z * Math.cos(theta);
   let lats = z * Math.sin(theta);
   return {
-    lng: lngs,
-    lat: lats
+    lng: lngs.toFixed(6),//后台控制为小数点后6位
+    lat: lats.toFixed(6)//后台控制为小数点后6位
   }
 };
 

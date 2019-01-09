@@ -1,9 +1,9 @@
 import {wxRequest} from './wxRequest';
 
-const getData = p => wxRequest('POST','/getData',p,false);//获取数据
+const signApi = p =>wxRequest('/api',p,'POST');//手动签到（带队管理员代签）
 
 export {
-  getData
+  signApi
 }
 
 

@@ -16,11 +16,17 @@ export default class extends wepy.app {
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black',
       backgroundColor:'#1989fa'
+    },
+    permission: {
+      "scope.userLocation": {
+        "desc": "你的位置信息将用于发起签到定位"
+      }
     }
   };
 
   globalData = {
-    userInfo: null
+    baseUrl:"https://study.ngrok.i84.com.cn",//请求地址
+    nowRequest:null,//当前请求（可以用于取消当前请求）
   };
 
   constructor () {
@@ -31,17 +37,5 @@ export default class extends wepy.app {
 
   onLaunch() {}
 
-  getUserInfo(cb) {
-    const that = this;
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo;
-        cb && cb(res.userInfo)
-      }
-    });
-  }
 }
 </script>
