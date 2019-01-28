@@ -1,41 +1,98 @@
 <style lang="scss" src="./assets/style/base.scss"></style>
-<style lang="scss" src="./assets/style/flex.scss"></style>
 
 <script>
-import wepy from 'wepy';
-import 'wepy-async-function';
+  import wepy from 'wepy';
+  import 'wepy-async-function';
+  import tips from './assets/js/tips';
 
-export default class extends wepy.app {
-  config = {
-    pages: [
-      'pages/login',
-    ],
-    window: {
-      backgroundTextStyle: 'dark',
-      navigationBarBackgroundColor: '#94d2ff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
-      backgroundColor:'#1989fa'
-    },
-    permission: {
-      "scope.userLocation": {
-        "desc": "你的位置信息将用于发起签到定位"
+  export default class extends wepy.app {
+    config = {
+      pages: [
+        'pages/login'
+      ],
+      window: {
+        backgroundTextStyle: 'dark',
+        navigationBarBackgroundColor: '#fff',
+        navigationBarTitleText: 'WeChat',
+        navigationBarTextStyle: 'black',
+        backgroundColor: '#1989fa'
+      },
+      permission: {
+        'scope.userLocation': {
+          'desc': '你的位置信息将用于发起签到定位'
+        }
       }
+    };
+
+    globalData = {
+      baseUrl: 'https://www.easy-mock.com/mock/5b502bb4645157291985a472/buslifemall',//请求地址
+      nowRequest: null,//当前请求（可以用于取消当前请求）
+      isIpx: false,//是否是iphoneX
+      networkStatus: '',//网络状态
+      isConnected: true//是否联网
+    };
+
+    constructor() {
+      super();
+      this.use('requestfix');
+      this.use('promisify');//开启promise
     }
-  };
 
-  globalData = {
-    baseUrl:"https://study.ngrok.i84.com.cn",//请求地址
-    nowRequest:null,//当前请求（可以用于取消当前请求）
-  };
+    onLaunch() {
+      let self = this;
 
-  constructor () {
-    super();
-    this.use('requestfix');
-    this.use('promisify');//开启promise
+      //获取系统型号（兼容iphoneX,iphoneXS,iphoneXS max,iphoneXR）
+      let ipxArr = ['iPhone X', 'iPhone11,2', 'iPhone11,8', 'iPhone11,4', 'iPhone11,6'],
+        bol = false;
+
+      wx.getSystemInfo({
+        success: function(res) {
+          for (let i = 0, len = ipxArr.length; i < len; i++) {
+            bol = bol || res.model.match(RegExp(ipxArr[i]));
+            if (bol) break;
+          }
+          self.globalData.isIpx = !!bol;
+        }
+      });
+
+      //获取网络状态
+      wx.getNetworkType({
+        success: function(res) {
+          self.globalData.networkStatus = res.networkType;
+          switch (res.networkType) {
+            case 'none':
+              tips.toast('无网络', 'fail');
+              self.globalData.isConnected = false;
+              break;
+
+            case '2g':
+            case '3g':
+              tips.toast('网络慢', 'warning');
+              self.globalData.isConnected = true;
+              break;
+
+            default:
+              self.globalData.isConnected = true;
+          }
+        }
+      });
+
+      //网络监听
+      wx.onNetworkStatusChange(function(res) {
+        self.globalData.isConnected = res.isConnected;//是否联网
+        self.globalData.networkStatus = res.networkType;//网络状态
+        if (res.networkType === '2g' || res.networkType === '3g') {
+          tips.toast('网络慢', 'warning');
+        }
+      });
+    }
+
+    /**
+     * 登出(global)
+     * */
+    async publicLoginOut() {
+      //清除缓存
+      wx.clearStorage();
+    }
   }
-
-  onLaunch() {}
-
-}
 </script>

@@ -23,15 +23,12 @@
     </form>
 
 
-    <!--提示插件-->
-    <van-toast id="van-toast"/>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
-  import Toast from '../components/vant/toast/toast';
-  import {isLogin} from '../assets/js/wxRequest';
+  import Http from '../assets/js/wxRequest';
 
   export default class Login extends wepy.page {
     config = {
@@ -69,7 +66,24 @@
     };
 
     async onLoad() {
-      let loginState = await isLogin();
+      try {
+        let result = await Http.ajax({
+          url:"/goodsData",
+          data:{
+            aa:890,
+            ss:true,
+            str:"string"
+          },
+          method:"POST"
+        });
+
+        console.log('请求成功');
+        console.log(result);
+      }catch (e) {
+        console.log('请求失败');
+        console.log(e);
+        return false;
+      }
     };
   }
 </script>

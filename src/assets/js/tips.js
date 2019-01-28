@@ -10,7 +10,7 @@ export default class Tips {
   /**
    * 弹出确认窗口
    */
-  static confirm(config = {}) {
+  confirm(config = {}) {
     return new Promise((resolve, reject) => {
       let obj = config;
       obj.success = (res)=>{
@@ -30,7 +30,7 @@ export default class Tips {
   /**
    * 弱提示
    */
-  static toast(title, icon = "success", onHide) {
+  toast(title, icon = "success", onHide) {
     let config = {
       title: title,
       icon: icon,
@@ -57,7 +57,7 @@ export default class Tips {
   /**
    * 状态栏加载
    */
-  static loading(title = "加载中") {
+  loading(title = "加载中") {
     if (Tips.isLoading) {
       return;
     }
@@ -68,15 +68,10 @@ export default class Tips {
   /**
    * 状态栏加载完毕
    */
-  static loaded() {
+  loaded() {
     if (Tips.isLoading) {
       Tips.isLoading = false;
       wx.hideNavigationBarLoading();//状态栏隐藏loading
     }
   }
 }
-
-/**
- * 静态变量，是否加载中
- */
-Tips.isLoading = false;

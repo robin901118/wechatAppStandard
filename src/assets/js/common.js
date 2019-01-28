@@ -1,46 +1,37 @@
-/**
- * 腾讯地图坐标转换百度地图坐标
- * @param lng 经度
- * @param lat 纬度
- * */
-const toBMapLocation = (lng, lat) => {
-  let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
-  let x = lng;
-  let y = lat;
-  let z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
-  let theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
-  let lngs = z * Math.cos(theta) + 0.0065;
-  let lats = z * Math.sin(theta) + 0.006;
-  return {
-    lng: lngs.toFixed(6),//后台控制为小数点后6位
-    lat: lats.toFixed(6)//后台控制为小数点后6位
+export default class transLocation{
+  constructor(){
+    this.xPi = 3.14159265358979324 * 3000.0 / 180.0;
   }
-};
 
-/**
- * 百度地图坐标转腾讯地图坐标
- * @param lng 经度
- * @param lat 纬度
- * */
-const toQQMapLocation = (lng, lat) => {
-  let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
-  let x = lng - 0.0065;
-  let y = lat - 0.006;
-  let z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
-  let theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
-  let lngs = z * Math.cos(theta);
-  let lats = z * Math.sin(theta);
-  return {
-    lng: lngs.toFixed(6),//后台控制为小数点后6位
-    lat: lats.toFixed(6)//后台控制为小数点后6位
+  /**
+   * 腾讯地图坐标转换百度地图坐标
+   * @param lng 经度
+   * @param lat 纬度
+   * */
+  toBmap(lng,lat){
+    let z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * this.xPi);
+    let theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * this.xPi);
+    return {
+      lng: z * Math.cos(theta) + 0.0065.toFixed(6),
+      lat: z * Math.sin(theta) + 0.006.toFixed(6)
+    }
   }
-};
 
-export {
-  toBMapLocation,
-  toQQMapLocation
+  /**
+   * 百度地图坐标转腾讯地图坐标
+   * @param lng 经度
+   * @param lat 纬度
+   * */
+  toQQmap(lng,lat){
+    let z = Math.sqrt(lng - 0.0065 * lng - 0.0065 + lat - 0.006 * lat - 0.006) - 0.00002 * Math.sin(lat - 0.006 * this.xPi);
+    let theta = Math.atan2(lat - 0.006, lng - 0.0065) - 0.000003 * Math.cos(lng - 0.0065 * this.xPi);
+    return {
+      lng: z * Math.cos(theta).toFixed(6),//后台控制为小数点后6位
+      lat: z * Math.sin(theta).toFixed(6)//后台控制为小数点后6位
+    }
+  }
+
 }
-
 
 
 
