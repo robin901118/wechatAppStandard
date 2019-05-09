@@ -10,7 +10,7 @@ export default class Tips {
   /**
    * 弹出确认窗口
    */
-  confirm(config = {}) {
+  static confirm(config = {}) {
     return new Promise((resolve, reject) => {
       let obj = config;
       obj.success = (res)=>{
@@ -30,17 +30,24 @@ export default class Tips {
   /**
    * 弱提示
    */
-  toast(title, icon = "success", onHide) {
+  static toast(title, icon = "success", onHide) {
     let config = {
       title: title,
       icon: icon,
       mask: true,
       duration: 1000
     };
+    //失败
     if(icon === 'fail'){
       delete config['icon'];
       config['image'] = '../assets/image/fail.png';
     }
+    //警告
+    if(icon === 'warning'){
+      delete config['icon'];
+      config['image'] = '../assets/image/warning.png';
+    }
+
 
     setTimeout(() => {
       wx.showToast(config);
@@ -57,7 +64,7 @@ export default class Tips {
   /**
    * 状态栏加载
    */
-  loading(title = "加载中") {
+  static loading() {
     if (Tips.isLoading) {
       return;
     }
@@ -68,10 +75,15 @@ export default class Tips {
   /**
    * 状态栏加载完毕
    */
-  loaded() {
+  static loaded() {
     if (Tips.isLoading) {
       Tips.isLoading = false;
       wx.hideNavigationBarLoading();//状态栏隐藏loading
     }
   }
 }
+
+/**
+ * 静态变量，是否加载中
+ */
+Tips.isLoading = false;
