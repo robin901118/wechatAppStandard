@@ -25,7 +25,7 @@
     };
 
     globalData = {
-      baseUrl: 'https://www.easy-mock.com/mock/5b502bb4645157291985a472/buslifemall',//请求地址
+      baseUrl: 'https://www.easy-mock.com/mock/5c063e891a285344e0eeb035/api',//请求地址
       nowRequest: null,//当前请求（可以用于取消当前请求）
       isIpx: false,//是否是iphoneX
       networkStatus: '',//网络状态

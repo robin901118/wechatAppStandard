@@ -68,7 +68,7 @@
     async onLoad() {
       try {
         let result = await Http.ajax({
-          url:"/goodsData",
+          url:"/api",
           data:{
             aa:890,
             ss:true,

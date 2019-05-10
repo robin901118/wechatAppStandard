@@ -1,10 +1,10 @@
-import tips from './tips';
+import Tips from './tips';
 import wepy from 'wepy';
 
-class Http extends tips{
-  constructor(basePath){
+class Http extends Tips{
+  constructor(baseUrl){
     super();
-    this.BaseUrl = basePath;
+    this.BaseUrl = baseUrl;
   }
 
   /**
@@ -39,7 +39,6 @@ class Http extends tips{
    * @params needLoading 是否需要加载
    * */
   ajax({url, data, method = 'GET'}){
-    console.log('ajax');
     return new Promise((resolve, reject) => {
       //判断当前网络状态
       if(!wepy.$instance.globalData.isConnected){
